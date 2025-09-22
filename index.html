@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>فاطمه قادری - Backend Developer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        :root {
+            /* Elegant Purple-Pink-Teal Palette */
+            --primary: #6c5ce7;
+            --secondary: #a29bfe;
+            --accent: #fd79a8;
+            --success: #00cec9;
+            --light: #ddd6fe;
+            --bg-light: #f8f9ff;
+            --text-dark: #2d3436;
+            --text-light: #636e72;
+            --gradient-1: linear-gradient(135deg, #6c5ce7, #a29bfe);
+            --gradient-2: linear-gradient(135deg, #fd79a8, #fdcb6e);
+            --gradient-3: linear-gradient(135deg, #00cec9, #55efc4);
+            --shadow-light: 0 10px 25px rgba(108, 92, 231, 0.15);
+            --shadow-medium: 0 15px 35px rgba(108, 92, 231, 0.2);
+            --shadow-heavy: 0 25px 50px rgba(108, 92, 231, 0.25);
+        }
+
+        body[dir="ltr"] {
+            direction: ltr;
+            text-align: left;
+        }
+
+        body[dir="rtl"] {
+            direction: rtl;
+            text-align: right;
+        }
+
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .floating-shape {
+            position: absolute;
+            border-radius: 50%;
+            animation: float-animation 8s ease-in-out infinite;
+        }
+
+        .shape1 {
+            width: 120px;
+            height: 120px;
+            top: 15%;
+            left: 8%;
+            background: radial-gradient(circle, rgba(108, 92, 231, 0.1), transparent);
+            animation-delay: 0s;
+        }
+
+        .shape2 {
+            width: 80px;
+            height: 80px;
+            top: 60%;
+            right: 12%;
+            background: radial-gradient(circle, rgba(253, 121, 168, 0.1), transparent);
+            animation-delay: 2s;
+        }
+
+        .shape3 {
+            width: 150px;
+            height: 150px;
+            bottom: 20%;
+            left: 15%;
+            background: radial-gradient(circle, rgba(0, 206, 201, 0.1), transparent);
+            animation-delay: 4s;
+        }
+
+        .shape4 {
+            width: 100px;
+            height: 100px;
+            top: 80%;
+            right: 25%;
+            background: radial-gradient(circle, rgba(162, 155, 254, 0.1), transparent);
+            animation-delay: 1s;
+        }
+
+        @keyframes float-animation {
+            0%, 100% {
+                transform: translateY(0px) rotate(0deg);
+                opacity: 0.4;
+            }
+            50% {
+                transform: translateY(-30px) rotate(180deg);
+                opacity: 0.8;
+            }
+        }
+
+        /* Language Toggle */
+        .lang-toggle {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            display: flex;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(15px);
+            border-radius: 25px;
+            padding: 4px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: var(--shadow-light);
+        }
+
+        .lang-btn {
+            padding: 10px 18px;
+            border: none;
+            background: transparent;
+            color: white;
+            font-weight: 600;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 13px;
+        }
+
+        .lang-btn.active {
+            background: var(--gradient-1);
+            box-shadow: 0 4px 15px rgba(108, 92, 231, 0.3);
+        }
+
+        .lang-btn:hover:not(.active) {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-1px);
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+        }
+
+        /* Header Section */
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            padding: 40px;
+            margin: 80px 0 30px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-medium);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: var(--gradient-1);
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 2;
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .profile-section {
+            text-align: center;
+        }
+
+        .profile-img {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            background: var(--gradient-1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 60px;
+            color: white;
+            font-weight: bold;
+            margin: 0 auto 20px;
+            position: relative;
+            box-shadow: var(--shadow-medium);
+            animation: profile-pulse 3s ease-in-out infinite;
+        }
+
+        @keyframes profile-pulse {
+            0%, 100% { 
+                transform: scale(1);
+                box-shadow: var(--shadow-medium);
+            }
+            50% { 
+                transform: scale(1.02);
+                box-shadow: var(--shadow-heavy);
+            }
+        }
+
+        .name-section h1 {
+            font-size: 3em;
+            color: var(--text-dark);
+            margin-bottom: 10px;
+            font-weight: 300;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .name-section .job-title {
+            font-size: 1.4em;
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .name-section .subtitle {
+            font-size: 1em;
+            color: var(--text-light);
+            margin-top: 10px;
+        }
+
+        .contact-quick {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 18px;
+            background: var(--bg-light);
+            border-radius: 25px;
+            border: 2px solid var(--light);
+            transition: all 0.3s ease;
+            font-size: 0.9em;
+            color: var(--text-dark);
+        }
+
+        .contact-item:hover {
+            transform: translateX(-5px);
+            background: var(--gradient-1);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .contact-icon {
+            font-size: 16px;
+            width: 22px;
+            text-align: center;
+        }
+
+        /* Main Grid */
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .sidebar-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 25px;
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-light);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .sidebar-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-3);
+        }
+
+        .card-title {
+            font-size: 1.3em;
+            color: var(--text-dark);
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 600;
+        }
+
+        .title-icon {
+            width: 32px;
+            height: 32px;
+            background: var(--gradient-1);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 14px;
+        }
+
+        /* Skills */
+        .skills-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+        }
+
+        .skill-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 20px;
+            background: var(--bg-light);
+            border-radius: 15px;
+            border-left: 4px solid var(--primary);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skill-item:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-light);
+            background: var(--light);
+        }
+
+        .skill-name {
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .skill-level {
+            font-size: 11px;
+            color: var(--primary);
+            font-weight: 500;
+            background: rgba(108, 92, 231, 0.1);
+            padding: 4px 10px;
+            border-radius: 12px;
+        }
+
+        /* Education */
+        .education-item {
+            padding: 20px;
+            background: var(--bg-light);
+            border-radius: 15px;
+            margin-bottom: 15px;
+            border-left: 4px solid var(--success);
+            transition: all 0.3s ease;
+        }
+
+        .education-item:hover {
+            transform: translateX(-5px);
+            box-shadow: var(--shadow-light);
+        }
+
+        .degree {
+            font-size: 1.05em;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 6px;
+        }
+
+        .university {
+            color: var(--success);
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .edu-date {
+            color: var(--text-light);
+            font-size: 0.85em;
+            margin-bottom: 10px;
+        }
+
+        .gpa {
+            background: var(--gradient-3);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.8em;
+            font-weight: 500;
+            display: inline-block;
+        }
+
+        /* Main Content */
+        .main-content {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 25px;
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-light);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .main-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-2);
+        }
+
+        .summary {
+            background: linear-gradient(135deg, rgba(108, 92, 231, 0.05), rgba(162, 155, 254, 0.05));
+            padding: 25px;
+            border-radius: 18px;
+            margin-bottom: 35px;
+            border: 1px solid rgba(108, 92, 231, 0.1);
+            position: relative;
+        }
+
+        .summary p {
+            font-size: 1.05em;
+            line-height: 1.8;
+            color: var(--text-dark);
+        }
+
+        /* Section Titles */
+        .section-title {
+            font-size: 1.6em;
+            color: var(--text-dark);
+            margin-bottom: 25px;
+            position: relative;
+            padding-bottom: 12px;
+            font-weight: 600;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--gradient-1);
+            border-radius: 2px;
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding-right: 35px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            right: 15px;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: var(--gradient-1);
+            border-radius: 2px;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 35px;
+            padding: 25px;
+            background: var(--bg-light);
+            border-radius: 18px;
+            border-right: 4px solid var(--primary);
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .timeline-item:hover {
+            transform: translateX(-8px);
+            box-shadow: var(--shadow-light);
+            background: white;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            right: -10px;
+            top: 25px;
+            width: 16px;
+            height: 16px;
+            background: var(--primary);
+            border-radius: 50%;
+            border: 3px solid white;
+            box-shadow: 0 3px 10px rgba(108, 92, 231, 0.3);
+        }
+
+        .job-title, .project-title {
+            font-size: 1.2em;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 6px;
+        }
+
+        .company {
+            font-size: 1em;
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .date {
+            color: var(--text-light);
+            font-size: 0.9em;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .description {
+            color: var(--text-dark);
+            line-height: 1.7;
+            font-size: 0.95em;
+        }
+
+        .description ul {
+            margin-right: 20px;
+            margin-top: 12px;
+        }
+
+        .description li {
+            margin-bottom: 10px;
+            position: relative;
+            padding-right: 15px;
+        }
+
+        .description li::before {
+            content: '▶';
+            position: absolute;
+            right: 0;
+            color: var(--accent);
+            font-size: 10px;
+            top: 3px;
+        }
+
+        .tech-stack {
+            margin-top: 15px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .tech-tag {
+            background: var(--gradient-1);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.8em;
+            font-weight: 500;
+            box-shadow: 0 2px 8px rgba(108, 92, 231, 0.25);
+        }
+
+        .project-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 12px;
+            padding: 8px 16px;
+            border: 2px solid var(--primary);
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            font-size: 0.9em;
+        }
+
+        .project-link:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-light);
+        }
+
+        /* Language Content Toggle */
+        .lang-content {
+            display: none;
+        }
+
+        .lang-content.active {
+            display: block;
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .header-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 25px;
+            }
+            
+            .contact-quick {
+                flex-direction: row;
+                justify-content: center;
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .header {
+                margin: 60px 0 20px;
+                padding: 25px 20px;
+            }
+            
+            .name-section h1 {
+                font-size: 2.2em;
+            }
+            
+            .lang-toggle {
+                top: 10px;
+                left: 10px;
+            }
+            
+            .timeline {
+                padding-right: 25px;
+            }
+        }
+
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            animation: fadeIn 1s ease-in-out forwards;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        .slide-up {
+            transform: translateY(20px);
+            opacity: 0;
+            animation: slideUp 0.6s ease-out forwards;
+        }
+
+        @keyframes slideUp {
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .sidebar-card:nth-child(1) { animation-delay: 0.1s; }
+        .sidebar-card:nth-child(2) { animation-delay: 0.2s; }
+        .sidebar-card:nth-child(3) { animation-delay: 0.3s; }
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="bg-animation">
+        <div class="floating-shape shape1"></div>
+        <div class="floating-shape shape2"></div>
+        <div class="floating-shape shape3"></div>
+        <div class="floating-shape shape4"></div>
+    </div>
+
+    <!-- Language Toggle -->
+    <div class="lang-toggle">
+        <button class="lang-btn active" onclick="switchLang('fa')">فارسی</button>
+        <button class="lang-btn" onclick="switchLang('en')">English</button>
+    </div>
+
+    <div class="container">
+        <!-- Persian Content -->
+        <div id="fa-content" class="lang-content active">
+            <!-- Header -->
+            <header class="header fade-in">
+                <div class="header-content">
+                    <div class="profile-section">
+                        <div class="profile-img">ف</div>
+                    </div>
+                    <div class="name-section">
+                        <h1>فاطمه قادری</h1>
+                        <p class="job-title">توسعه‌دهنده Backend</p>
+                        <p class="subtitle">متخصص Python & Django | طراح سیستم‌های مقیاس‌پذیر</p>
+                    </div>
+                    <div class="contact-quick">
+                        <div class="contact-item">
+                            <span class="contact-icon">📧</span>
+                            <span>ghaderifateme1312@gmail.com</span>
+                        </div>
+                        <div class="contact-item">
+                            <span class="contact-icon">📱</span>
+                            <span>(+98) 913 914 7541</span>
+                        </div>
+                        <div class="contact-item">
+                            <span class="contact-icon">📍</span>
+                            <span>اصفهان، ایران</span>
+                        </div>
+                        <div class="contact-item">
+                            <span class="contact-icon">💼</span>
+                            <span>fateme-ghaderi</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="main-grid">
+                <!-- Sidebar -->
+                <aside class="sidebar">
+                    <!-- Skills -->
+                    <div class="sidebar-card slide-up">
+                        <h2 class="card-title">
+                            <span class="title-icon">🔧</span>
+                            مهارت‌های تخصصی
+                        </h2>
+                        <div class="skills-container">
+                            <div class="skill-item">
+                                <span class="skill-name">Python</span>
+                                <span class="skill-level">پیشرفته</span>
+                            </div>
+                            <div class="skill-item">
+                                <span class="skill-name">Django</span>
+                                <span class="skill-level">پیشرفته</span>
+                            </div>
+                            <div class="skill-item">
+                                <span class="skill-name">Django REST</span>
+                                <span class="skill-level">پیشرفته</span>
+                            </div>
+                            <div class="skill-item">
+                                <span class="skill-name">PostgreSQL</span>
+                                <span class="skill-level">متوسط</span>
+                            </div>
+                            <div class="skill-item">
+                                <span class="skill-name">Redis</span>
+                                <span class="skill-level">متوسط</span>
+                            </div>
+                            <div class="skill-item">
+                                <span class="skill-name">MongoDB</span>
+                                <span class="skill-level">متوسط</span>
+                            </div>
+                            <div class="skill-item">
+                                <span class="skill-name">Docker</span>
+                                <span class="skill-level">متوسط</span>
+                            </div>
+                            <div class="skill-item">
+                                <span class="skill-name">Celery</span>
+                                <span class="skill-level">متوسط</span>
+                            </div>
+                            <div class="skill-item">
+                                <span class="skill-name">Git</span>
+                                <span class="skill-level">پیشرفته</span>
+                            </div>
+                            <div class="skill-item">
+                                <span class="skill-name">C++</span>
+                                <span class="skill-level">مبتدی</span>
+                            </div>
+                            <div class="skill-item">
+                                <span class="skill-name">Qt</span>
+                                <span class="skill-level">مبتدی</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Education -->
+                    <div class="sidebar-card slide-up">
+                        <h2 class="card-title">
+                            <span class="title-icon">🎓</span>
+                            تحصیلات
+                        </h2>
+                        <div class="education-item">
+                            <div class="degree">کارشناسی علوم کامپیوتر</div>
+                            <div class="university">دانشگاه یزد</div>
+                            <div class="edu-date">مهر 1400 - شهریور 1404</div>
+                            <div class="gpa">معدل: 16.10</div>
+                        </div>
+                    </div>
+
+                    <!-- Languages -->
+                    <div class="sidebar-card slide-up">
+                        <h2 class="card-title">
+                            <span class="title-icon">🌍</span>
+                            زبان‌ها
+                        </h2>
+                        <div class="skills-container">
+                            <div class="skill-item">
+                                <span class="skill-name">فارسی</span>
+                                <span class="skill-level">مادری</span>
+                            </div>
+                            <div class="skill-item">
+                                <span class="skill-name">انگلیسی</span>
+                                <span class="skill-level">متوسط رو به بالا</span>
+                            </div>
+                        </div>
+                    </div>
+                </aside>
+
+                <!-- Main Content -->
+                <main class="main-content slide-up">
+                    <div class="summary">
+                        <p>
+                            <strong>توسعه‌دهنده Backend با بیش از 2 سال تجربه</strong> در طراحی و پیاده‌سازی سیستم‌های پیچیده وب و GIS. 
+                            متخصص در <strong>Python و Django</strong> با تجربه عملی در توسعه APIهای RESTful، مدیریت پایگاه‌داده‌های رابطه‌ای و NoSQL، 
+                            و پیاده‌سازی سیستم‌های بلادرنگ با Celery. علاقه‌مند به <strong>هوش مصنوعی و یادگیری ماشین</strong> با تمرکز بر 
+                            مدل‌های زبان بزرگ (LLM) و ابزارهای نوین AI. در جستجوی فرصت‌هایی برای حل مسائل پیچیده تکنولوژیکی.
+                        </p>
+                    </div>
+
+                    <section>
+                        <h2 class="section-title">💼 تجربه شغلی</h2>
+                        <div class="timeline">
+                            <div class="timeline-item">
+                                <div class="job-title">توسعه‌دهنده Python Backend</div>
+                                <div class="company">شرکت اندیش بنیان صفا</div>
+                                <div class="date">📅 تیر 1403 - شهریور 1404 (یزد)</div>
+                                <div class="description">
+                                    <ul>
+                                        <li><strong>سیستم مدیریت API Key:</strong> طراحی و پیاده‌سازی سیستم احراز هویت پیشرفته برای کنترل دسترسی به سرویس‌های WMS/WFS با قابلیت مدیریت سطوح مختلف دسترسی</li>
+                                        <li><strong>سیستم مانیتورینگ هوشمند:</strong> توسعه سامانه نظارت بلادرنگ بر لایه‌های جغرافیایی با قابلیت ارسال اعلان‌های خودکار از طریق ایمیل و SMS در صورت خرابی یا عدم فعالیت</li>
+                                        <li><strong>وب‌هوک‌های پیشرفته:</strong> پیاده‌سازی APIهای مقاوم با سیستم retry logic، لاگ‌گیری جامع، و اعتبارسنجی پاسخ‌ها برای تضمین قابلیت اطمینان</li>
+                                        <li><strong>سیستم تحلیل لاگ:</strong> توسعه پردازشگر بکگراند با Celery برای تحلیل و پردازش حجم بالای داده‌های لاگ و استخراج بینش‌های عملیاتی</li>
+                                    </ul>
+                                    <div class="tech-stack">
+                                        <span class="tech-tag">Python</span>
+                                        <span class="tech-tag">Django REST</span>
+                                        <span class="tech-tag">PostgreSQL</span>
+                                        <span class="tech-tag">Redis</span>
+                                        <span class="tech-tag">Celery</span>
+                                        <span class="tech-tag">Docker</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </section>
+
+                <section>
+                    <h2 class="section-title">📂 پروژه‌ها</h2>
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="project-title">سامانه مدیریت حفاری شهری</div>
+                            <div class="company">Freelance / Personal Project</div>
+                            <div class="date">📅 1403</div>
+                            <div class="description">
+                                <ul>
+                                    <li>پیاده‌سازی سیستم مدیریت لایه‌های جغرافیایی و مسیر‌یابی با استفاده از Django و PostGIS</li>
+                                    <li>ایجاد APIهای RESTful برای مدیریت داده‌ها و اجرای محاسبات مکانی</li>
+                                    <li>استفاده از Celery و Redis برای پردازش‌های بلادرنگ و طولانی</li>
+                                </ul>
+                                <div class="tech-stack">
+                                    <span class="tech-tag">Python</span>
+                                    <span class="tech-tag">Django</span>
+                                    <span class="tech-tag">PostGIS</span>
+                                    <span class="tech-tag">Celery</span>
+                                    <span class="tech-tag">Redis</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </main>
+        </div>
+    </div>
+
+    <!-- English Content (Initially hidden) -->
+    <div id="en-content" class="lang-content">
+        <header class="header fade-in">
+            <div class="header-content">
+                <div class="profile-section">
+                    <div class="profile-img">F</div>
+                </div>
+                <div class="name-section">
+                    <h1>Fateme Ghaderi</h1>
+                    <p class="job-title">Backend Developer</p>
+                    <p class="subtitle">Python & Django Expert | Scalable Systems Designer</p>
+                </div>
+                <div class="contact-quick">
+                    <div class="contact-item">
+                        <span class="contact-icon">📧</span>
+                        <span>ghaderifateme1312@gmail.com</span>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-icon">📱</span>
+                        <span>(+98) 913 914 7541</span>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-icon">📍</span>
+                        <span>Isfahan, Iran</span>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-icon">💼</span>
+                        <span>fateme-ghaderi</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <main class="main-content slide-up">
+            <div class="summary">
+                <p>
+                    <strong>Backend developer with 2+ years experience</strong> in designing and implementing complex web and GIS systems.
+                    Expert in <strong>Python and Django</strong> with practical experience in building RESTful APIs, managing relational and NoSQL databases,
+                    and implementing real-time systems with Celery. Passionate about <strong>AI and machine learning</strong> focusing on LLMs and modern AI tools.
+                </p>
+            </div>
+        </main>
+    </div>
+
+</div>
+
+<!-- Footer -->
+<footer style="text-align:center; padding:25px 10px; background:rgba(255,255,255,0.8); margin-top:50px; border-top:4px solid #6c5ce7;">
+    <p style="color:#333; font-size:0.9em;">© 2025 Fateme Ghaderi. All rights reserved.</p>
+</footer>
+
+<script>
+    function switchLang(lang) {
+        const faContent = document.getElementById('fa-content');
+        const enContent = document.getElementById('en-content');
+        const buttons = document.querySelectorAll('.lang-btn');
+
+        if(lang === 'fa') {
+            faContent.classList.add('active');
+            enContent.classList.remove('active');
+        } else {
+            enContent.classList.add('active');
+            faContent.classList.remove('active');
+        }
+
+        buttons.forEach(btn => btn.classList.remove('active'));
+        document.querySelector(`.lang-btn[onclick="switchLang('${lang}')"]`).classList.add('active');
+    }
+</script>
+</body>
+</html>
